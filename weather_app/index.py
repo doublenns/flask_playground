@@ -7,7 +7,11 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    return "Hello World!"
+    return "Hello, wonderful world!"
+
+@app.route("/goodbye")
+def goodbye():
+    return "Goodbye, cruel world!"
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 8080))
