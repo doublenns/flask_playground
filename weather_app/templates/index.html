@@ -3,7 +3,20 @@
         <title>My Weather</title>
     </head>
     <body>
+
         <h1>Weather forecast for {{city}}, {{country}}</h1>
-        <p>
-            {{day}} &ndash; {{mini}} &ndash; {{maxi}} &ndash; {{description}}
-        </p>
+
+        {% for day in forecast_list %}
+            {% if day[3] == "light rain" or day[3]=="clear sky" %}
+                <p><font color="green">
+                {{day[0]}} &ndash; {{day[1]}} &ndash; {{day[2]}} &ndash; {{day[3]}}
+                </font></p>
+            {% else %}
+                <p>
+                {{day[0]}} &ndash; {{day[1]}} &ndash; {{day[2]}} &ndash; {{day[3]}}
+                </p>
+            {% endif %}
+        {% endfor %}
+
+    </body>
+</html>

@@ -38,13 +38,17 @@ def index():
 
     city = data.get("city").get("name")
     country = data.get("city").get("country")
-    day = time.strftime('%d %B', time.localtime(data.get("list")[0].get("dt")))
-    mini = data.get("list")[0].get("temp").get("min")
-    maxi = data.get("list")[0].get("temp").get("max")
-    description = data.get("list")[0].get("weather")[0].get("description")
+    forecast_list = []
 
-    return render_template("index.html", city=city, country=country, day=day,
-        mini=mini, maxi=maxi, description = description)
+    for d in data.get("list"):
+        day = time.strftime('%d %B', time.localtime(d.get("dt")))
+        mini = d.get("temp").get("min")
+        maxi = d.get("temp").get("max")
+        description = d.get("weather")[0].get("description")
+        forecast_list.append((day, mini, maxi, description))
+
+    return render_template("index.html", city=city, country=country,
+        forecast_list=forecast_list)
 
 
 if __name__ == '__main__':
