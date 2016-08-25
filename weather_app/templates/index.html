@@ -5,18 +5,22 @@
     <body>
 
         <h1>Weather forecast for {{city}}, {{country}}</h1>
-
-        {% for day in forecast_list %}
-            {% if day[3] == "light rain" or day[3]=="clear sky" %}
-                <p><font color="green">
-                {{day[0]}} &ndash; {{day[1]}} &ndash; {{day[2]}} &ndash; {{day[3]}}
-                </font></p>
-            {% else %}
-                <p>
-                {{day[0]}} &ndash; {{day[1]}} &ndash; {{day[2]}} &ndash; {{day[3]}}
-                </p>
-            {% endif %}
-        {% endfor %}
+        <table border="1">
+            <tr>
+                <th>Date</th><th>Min</th><th>Max</th><th>Description</th>
+            </tr>
+            {% for day in forecast_list %}
+                <tr>
+                    <td>{{day[0]}}</td>
+                    <td>{{day[1]}}</td>
+                    <td>{{day[2]}}</td>
+                    {% if day[3] =="light rain" or day[3]=="moderate rain" %}
+                        <td><font color="green">{{day[3]}}</font></td>
+                    {% else %}
+                        <td>{{day[3]}}</td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
 
     </body>
 </html>
