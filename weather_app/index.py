@@ -14,10 +14,10 @@ app = Flask(__name__)
 def get_api_key():
     '''
     Function reads API key from user's home directory.
-    File must be named "openweathermap.api_key"
+    File must be named ".openweathermap.api_key"
     '''
     homedir = os.path.expanduser("~")
-    with open(homedir+"/openweathermap.api_key", "r") as f:
+    with open(homedir+"/.openweathermap.api_key", "r") as f:
         api_key = f.read()
     return api_key
 
