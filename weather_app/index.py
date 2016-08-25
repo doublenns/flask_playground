@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from flask import Flask
+from flask import render_template
 import os
 import urllib2
 import json
@@ -26,7 +27,7 @@ def get_weather():
     '''
     api_key = get_api_key()
     url = ("http://api.openweathermap.org/data/2.5/forecast/daily?"
-	"q=Charlotte,US&cnt=10&mode=json&units=imperial&APPID=" + api_key)
+        "q=Charlotte,US&cnt=10&mode=json&units=imperial&APPID=" + api_key)
     response = urllib2.urlopen(url).read()
     return response
 
@@ -34,18 +35,16 @@ def get_weather():
 @app.route("/")
 def index():
     data = json.loads(get_weather())
-    page = "<html><head><title>My Weather</title></head><body>"
-    page += "<h1>Weather for {}, {}</h1>".format(data.get("city").get("name"),
-		data.get("city").get("country"))
-    for day in data.get("list"):
-        page += ("<b>date:</b> {} <b>min:</b> {} <b>max:</b> {}"
-                "<b>description</b> {} <br /> ").format(
-                        time.strftime('%d %B', time.localtime(day.get("dt"))),
-                        (day.get("temp").get("min")),
-                        day.get("temp").get("max"),
-                        day.get("weather")[0].get("description"))
-    page += "</body></html>"
-    return page
+
+    city = data.get("city").get("name")
+    country = data.get("city").get("country")
+    day = time.strftime('%d %B', time.localtime(data.get("list")[0].get("dt")))
+    mini = data.get("list")[0].get("temp").get("min")
+    maxi = data.get("list")[0].get("temp").get("max")
+    description = data.get("list")[0].get("weather")[0].get("description")
+
+    return render_template("index.html", city=city, country=country, day=day,
+        mini=mini, maxi=maxi, description = description)
 
 
 if __name__ == '__main__':
