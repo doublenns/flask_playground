@@ -36,8 +36,8 @@ def get_weather(city):
 @app.route("/<searchcity>")
 def index(searchcity="Charlotte"):
     data = json.loads(get_weather(searchcity))
-    city = data.get("city").get("name")
-    country = data.get("city").get("country")
+    city = data["city"]["name"]
+    country = data["city"]["country"]
     forecast_list = []
 
     for d in data.get("list"):
