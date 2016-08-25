@@ -13,9 +13,10 @@ def index():
 def goodbye():
     return "Goodbye, cruel world!"
 
-@app.route("/hello/<name>")
-def hello_name(name):
-    return "Hey {}! How ya doin today, buddy?".format(name)
+# If age isn't an int, server simply returns a 404 status code
+@app.route("/hello/<name>/<int:age>")
+def hello_name(name, age):
+    return "Hey {}! How is like being {} years old?".format(name, age)
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 8080))
