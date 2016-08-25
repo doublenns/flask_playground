@@ -21,21 +21,21 @@ def get_api_key():
         api_key = f.read()
     return api_key
 
-def get_weather():
+def get_weather(city):
     '''
     Makes a web query against openweathermap API for weather in Charlotte
     '''
     api_key = get_api_key()
     url = ("http://api.openweathermap.org/data/2.5/forecast/daily?"
-        "q=Charlotte,US&mode=json&units=imperial&APPID=" + api_key)
+        "q={}&mode=json&units=imperial&APPID=".format(city) + api_key)
     response = urllib2.urlopen(url).read()
     return response
 
 
 @app.route("/")
-def index():
-    data = json.loads(get_weather())
-
+@app.route("/<searchcity>")
+def index(searchcity="Charlotte"):
+    data = json.loads(get_weather(searchcity))
     city = data.get("city").get("name")
     country = data.get("city").get("country")
     forecast_list = []
