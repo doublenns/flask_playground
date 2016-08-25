@@ -40,7 +40,10 @@ def index():
         searchcity = "Charlotte"
 
     data = json.loads(get_weather(searchcity))
-    city = data["city"]["name"]
+    try:
+        city = data["city"]["name"]
+    except KeyError:
+        return render_template("invalid_city.html", user_input = searchcity)
     country = data["city"]["country"]
     forecast_list = []
 
