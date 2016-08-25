@@ -2,21 +2,22 @@
 
 from flask import Flask
 import os
+import urllib2
 
 app = Flask(__name__)
 
+# Need to create an API key to see results
+def get_weather():
+    url = ("http://api.openweathermap.org/data/2.5/weather?q=charlotte,"
+        "&units=imperial")
+    response = urllib2.urlopen(url).read()
+    return response
+
+
 @app.route("/")
 def index():
-    return "Hello, wonderful world!"
+    return get_weather()
 
-@app.route("/goodbye")
-def goodbye():
-    return "Goodbye, cruel world!"
-
-# If age isn't an int, server simply returns a 404 status code
-@app.route("/hello/<name>/<int:age>")
-def hello_name(name, age):
-    return "Hey {}! How is like being {} years old?".format(name, age)
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 8080))
