@@ -27,7 +27,7 @@ def get_weather():
     '''
     api_key = get_api_key()
     url = ("http://api.openweathermap.org/data/2.5/forecast/daily?"
-        "q=Charlotte,US&cnt=10&mode=json&units=imperial&APPID=" + api_key)
+        "q=Charlotte,US&mode=json&units=imperial&APPID=" + api_key)
     response = urllib2.urlopen(url).read()
     return response
 
