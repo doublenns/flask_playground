@@ -14,8 +14,8 @@
                     <td>{{day[0]}}</td>
                     <td>{{day[1]}}</td>
                     <td>{{day[2]}}</td>
-                    {% if day[3] =="light rain" or day[3]=="moderate rain" %}
-                        <td><font color="green">{{day[3]}}</font></td>
+                    {% if "rain" in day[3] %}
+                        <td><font color="blue">{{day[3]}}</font></td>
                     {% else %}
                         <td>{{day[3]}}</td>
                     {% endif %}
