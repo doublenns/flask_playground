@@ -1,18 +1,20 @@
 #!/usr/bin/env python
 
-from flask import Flask
-from flask import render_template
-from flask import request
-from flask import make_response
+'''
+Program to display weather forecast for a specified City
+'''
+
 import os
 import urllib2
 import json
 import time
 import datetime
+from flask import Flask
+from flask import render_template
+from flask import request
+from flask import make_response
 
-'''
-TO-DO: Input validation. (Only alpha chars. Strip white spaces)
-'''
+# TODO: Input validation. (Only alpha chars. Strip white spaces)
 
 
 app = Flask(__name__)
@@ -42,6 +44,9 @@ def get_weather(city):
 
 @app.route("/")
 def index():
+    '''
+    Function for the index page
+    '''
     searchcity = request.args.get("searchcity")
     if not searchcity:
         searchcity = request.cookies.get("last_city")
@@ -64,7 +69,8 @@ def index():
         forecast_list.append((day, mini, maxi, description))
 
     response = make_response(render_template("index.html", city=city,
-                             country=country, forecast_list=forecast_list))
+                                             country=country,
+                                             forecast_list=forecast_list))
     if request.args.get("remember"):
         # Cookie won't be deleted for a year since their last visit
         response.set_cookie("last_city", "{},{}".format(city, country),
@@ -76,6 +82,10 @@ def index():
 # Need to make code more DRY
 @app.route("/secure")
 def secure():
+    '''
+    Function for a slightly more secure version of the web app. Requests use
+    POST instead of GET to prevent showing search info in the URL
+    '''
     searchcity = request.args.get("searchcity")
     if not searchcity:
         searchcity = "Charlotte"
@@ -102,6 +112,9 @@ def secure():
 # Need to explicitly allow route to accept post requests
 @app.route("/weather", methods=["POST"])
 def weather():
+    '''
+    Landing page after using the "secure" version of the web app
+    '''
     # request.form instead of request.args
     searchcity = request.form.get("searchcity")
     if not searchcity:
