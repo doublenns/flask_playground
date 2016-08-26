@@ -1,6 +1,10 @@
 <html>
     <head>
         <title>DoubleNNs' Weather App</title>
+        <link rel="stylesheet" type="text/css"
+                href="{{ url_for("static", filename="style.css") }}">
+        <link rel="shortcut icon"
+                href="{{ url_for("static", filename="favicon.ico") }}">
     </head>
     <body>
 
@@ -10,7 +14,7 @@
         </form>
 
         <h1>Weather forecast for {{city}}, {{country}}</h1>
-        <table border="1">
+        <table>    
             <tr>
                 <th>Date</th><th>Min</th><th>Max</th><th>Description</th>
             </tr>
@@ -26,6 +30,7 @@
                     {% endif %}
                 </tr>
             {% endfor %}
+        </table>
 
     </body>
 </html>
