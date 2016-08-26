@@ -64,9 +64,10 @@ def index():
 
     response = make_response(render_template("index.html", city=city,
         country=country, forecast_list=forecast_list))
-    #Cookie won't be deleted for a year since their last visit
-    response.set_cookie("last_city","{},{}".format(city, country),
-        expires=datetime.datetime.today() + datetime.timedelta(days=365))
+    if request.args.get("remember"):
+        #Cookie won't be deleted for a year since their last visit
+        response.set_cookie("last_city","{},{}".format(city, country),
+            expires=datetime.datetime.today() + datetime.timedelta(days=365))
     return response
 
 
