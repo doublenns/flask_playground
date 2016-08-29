@@ -26,7 +26,8 @@ def get_api_key():
     File must be named ".openweathermap.api_key"
     '''
     homedir = os.path.expanduser("~")
-    with open(homedir+"/.openweathermap.api_key", "r") as f:
+    api_key_file = "/access_tokens/openweathermap/openweathermap.api_key"
+    with open(homedir + api_key_file, "r") as f:
         api_key = f.read()
     return api_key
 
