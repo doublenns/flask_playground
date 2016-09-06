@@ -2,8 +2,12 @@
 
 from flask import Flask
 from flask import render_template
+from models import db
 
 app = Flask(__name__)
+
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://localhost/map_app"
+db.init_app
 
 @app.route("/")
 def index():
