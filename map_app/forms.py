@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from flask_wtf import Form
-from wtforms import Stringfield
+from wtforms import StringField
 from wtforms import PasswordField
 from wtforms import SubmitField
 
