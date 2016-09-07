@@ -10,4 +10,4 @@ class SignupForm(Form):
     last_name = StringField("Last name")
     email = StringField("Email")
     password = PasswordField("Password")
-    submit = SubmitField("")
+    submit = SubmitField("Sign Up")
