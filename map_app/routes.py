@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import os
 from flask import Flask
 from flask import render_template
 from flask import request
@@ -9,7 +10,29 @@ from forms import SignupForm
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://localhost/map_app"
+
+def get_psql_pw():
+    '''
+    Function reads PSQL user password from user's home dir.
+    '''
+    homedir = os.path.expanduser("~")
+    psql_pw_file = "/access_tokens/map_app_postgresql/map_app.password"
+    with open(homedir + psql_pw_file, "r") as f:
+        psql_pw = f.read()
+    return psql_pw
+
+
+psql_user = "map_app"
+psql_pw = get_psql_pw()
+psql_db = "map_app"
+
+psql_db_uri = "postgresql://{}:{}@localhost:{}/{}"
+psql_db_uri = psql_db_uri.format(psql_user, psql_pw, 5432, psql_db)
+
+
+# app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://localhost/map_app"
+# Instead of above, using username/password in the URL
+app.config['SQLALCHEMY_DATABASE_URI'] = psql_db_uri
 db.init_app
 
 app.secret_key = "development-key"
