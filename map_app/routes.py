@@ -4,6 +4,7 @@ from flask import Flask
 from flask import render_template
 from flask import request
 from models import db
+from models import User
 from forms import SignupForm
 
 app = Flask(__name__)
@@ -32,6 +33,10 @@ def signup():
         if form.validate() is False:
             return render_template("signup.html", form=form)
         else:
+            new_user = User(form.first_name.data, form.last_name.data,
+                            form.email.data, form.password.data)
+            db.session.add(new_user)
+            db.session.commit()
             return "Success!"
 
     elif request.method == "GET":
