@@ -13,25 +13,28 @@ db.init_app
 
 app.secret_key = "development-key"
 
+
 @app.route("/")
 def index():
     return render_template("index.html")
 
+
 @app.route("/about")
 def about():
     return render_template("about.html")
+
 
 @app.route("/signup", methods=['GET', 'POST'])
 def signup():
     form = SignupForm()
 
     if request.method == "POST":
-        if form.validate() == False:
+        if form.validate() is False:
             return render_template("signup.html", form=form)
         else:
             return "Success!"
 
-    elif request.method =="GET":
+    elif request.method == "GET":
         return render_template("signup.html", form=form)
 
 if __name__ == "__main__":
