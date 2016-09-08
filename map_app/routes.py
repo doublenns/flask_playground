@@ -18,22 +18,24 @@ def get_psql_pw():
     homedir = os.path.expanduser("~")
     psql_pw_file = "/access_tokens/map_app_postgresql/map_app.password"
     with open(homedir + psql_pw_file, "r") as f:
-        psql_pw = f.read()
+        psql_pw = f.read().strip()
     return psql_pw
 
 
 psql_user = "map_app"
 psql_pw = get_psql_pw()
+psql_port = 5432
 psql_db = "map_app"
 
 psql_db_uri = "postgresql://{}:{}@localhost:{}/{}"
-psql_db_uri = psql_db_uri.format(psql_user, psql_pw, 5432, psql_db)
+psql_db_uri = psql_db_uri.format(psql_user, psql_pw, psql_port, psql_db)
 
 
 # app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://localhost/map_app"
 # Instead of above, using username/password in the URL
 app.config['SQLALCHEMY_DATABASE_URI'] = psql_db_uri
-db.init_app
+# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = None
+db.init_app(app)
 
 app.secret_key = "development-key"
 
