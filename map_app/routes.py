@@ -76,6 +76,9 @@ def signup():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    if "email" in session:
+        return redirect(url_for("home"))
+
     form = LoginForm()
 
     if request.method == "POST":
@@ -98,6 +101,9 @@ def login():
 
 @app.route("/logout")
 def logout():
+    if "email" in session:
+        return redirect(url_for("home"))
+
     session.pop("email", None)
     return redirect(url_for("index"))
 
