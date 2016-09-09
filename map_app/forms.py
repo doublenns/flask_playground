@@ -10,23 +10,30 @@ from wtforms.validators import Length
 
 
 class SignupForm(Form):
-    first_name = StringField("First name",
-                             validators=[
-                                 DataRequired("Please enter your first name")
-                                 ])
-    last_name = StringField("Last name",
-                            validators=[
-                                DataRequired("Please enter your last name")
-                                ])
-    email = StringField("Email",
-                        validators=[
-                            DataRequired("Please enter your email"),
-                            Email("Please enter a valid e-mail address")
+    first_name = StringField("First name", validators=[
+                             DataRequired("Please enter your first name")
+                             ])
+    last_name = StringField("Last name", validators=[
+                            DataRequired("Please enter your last name")
                             ])
-    password = PasswordField("Password",
-                             validators=[
-                                 DataRequired("Please enter a password."),
-                                 Length(min=6, message="Passwords must be \
-                                        6 characters or longer")
-                                 ])
+    email = StringField("Email", validators=[
+                        DataRequired("Please enter your email"),
+                        Email("Please enter a valid e-mail address")
+                        ])
+    password = PasswordField("Password", validators=[
+                             DataRequired("Please enter a password."),
+                             Length(min=6, message="Passwords must be 6 \
+                                    characters or longer")
+                             ])
     submit = SubmitField("Sign Up")
+
+
+class LoginForm(Form):
+    email = StringField("Email", validators=[
+                        DataRequired("Please enter your email"),
+                        Email("Please enter a valid e-mail address")
+                        ])
+    password = StringField("Password", validators=[
+                           DataRequired("Please enter your password."),
+                           ])
+    submit = SubmitField("Sign In")
