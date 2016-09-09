@@ -104,6 +104,9 @@ def logout():
 
 @app.route("/home")
 def home():
+    if "email" not in session:
+        return redirect(url_for("login.html"))
+
     return render_template("home.html")
 
 
