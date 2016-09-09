@@ -10,7 +10,7 @@ from flask import url_for
 from models import db
 from models import User
 from forms import SignupForm
-from forms import Login
+from forms import LoginForm
 
 app = Flask(__name__)
 
@@ -94,6 +94,12 @@ def login():
 
     elif request.method == "GET":
         return render_template("login.html", form=form)
+
+
+@app.route("/logout")
+def logout():
+    session.pop("email", None)
+    return redirect(url_for("index"))
 
 
 @app.route("/home")
