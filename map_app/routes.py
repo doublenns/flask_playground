@@ -9,6 +9,7 @@ from flask import redirect
 from flask import url_for
 from models import db
 from models import User
+from models import Place
 from forms import SignupForm
 from forms import LoginForm
 from forms import AddressForm
@@ -115,15 +116,30 @@ def home():
         return redirect(url_for("login.html"))
 
     form = AddressForm()
+    places = []
+    my_coordinates = (37.4221, -122.0844)
+
     if request.method == "POST":
         if form.validate() == False:
             return render_template("home.html", form=form)
         else:
-            # handle the form submission
-            pass
+            # Get the address
+            address = form.address.data
+
+            # Query for the places around it
+            p = Place()
+            my_coordinates = p.address_to_latlng(address)
+            places = p.query(address)
+
+            # Return those results
+            return render_template("home.html", form=form,
+                                   my_coordinates=my_coordinates,
+                                   places=places)
 
     elif request.method == "GET":
-        return render_template("home.html", form=form)
+        return render_template("home.html", form=form,
+                                   my_coordinates=my_coordinates,
+                                   places=places)
 
     return render_template("home.html")
 
