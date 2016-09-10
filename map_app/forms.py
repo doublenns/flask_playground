@@ -37,3 +37,11 @@ class LoginForm(Form):
                            DataRequired("Please enter your password."),
                            ])
     submit = SubmitField("Sign In")
+
+
+class AddressForm(Form):
+    address = StringField("Address", validators=[
+                          DataRequired("Please enter an address.")
+                          ])
+    submit = SubmitField("Search")
+

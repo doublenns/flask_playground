@@ -11,6 +11,7 @@ from models import db
 from models import User
 from forms import SignupForm
 from forms import LoginForm
+from forms import AddressForm
 
 app = Flask(__name__)
 
@@ -112,6 +113,17 @@ def logout():
 def home():
     if "email" not in session:
         return redirect(url_for("login.html"))
+
+    form = AddressForm()
+    if request.method == "POST":
+        if form.validate() == False:
+            return render_template("home.html", form=form)
+        else:
+            # handle the form submission
+            pass
+
+    elif request.method == "GET":
+        return render_template("home.html", form=form)
 
     return render_template("home.html")
 
