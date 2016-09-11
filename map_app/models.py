@@ -40,6 +40,9 @@ class Place(object):
         # 80 meters is one minute walking time
         return int(meters / 80)
 
+    def wiki_path(self, slug):
+        return urllib2.urlparse.urljoin("http://en.wikipedia.org/wiki/", slug.replace(' ', '_'))
+
     def address_to_latlng(self, address):
         g = geocoder.google(address)
         return (g.lat, g.lng)
@@ -55,7 +58,7 @@ class Place(object):
         results = g.read()
         g.close()
 
-        data = jsno.loads(results)
+        data = json.loads(results)
         print data
 
         places = []
@@ -65,7 +68,7 @@ class Place(object):
             lat = place["lat"]
             lng = place["lon"]
             wiki_url = self.wiki_path(name)
-            walkingtime = self.meters_to_walking_time(meters)
+            walking_time = self.meters_to_walking_time(meters)
 
             d = {
                 "name": name,

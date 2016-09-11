@@ -110,7 +110,7 @@ def logout():
     return redirect(url_for("index"))
 
 
-@app.route("/home")
+@app.route("/home", methods=["GET", "POST"])
 def home():
     if "email" not in session:
         return redirect(url_for("login.html"))
